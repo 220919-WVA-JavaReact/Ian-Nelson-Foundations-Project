@@ -1,6 +1,11 @@
 package com.revature.strings.foundationsProject;
+import com.revature.strings.foundationsProject.models.Employee;
+import com.revature.strings.foundationsProject.service.EmployeeService;
+
 import java.util.Scanner;
 public class Application {
+
+    public static EmployeeService es = new EmployeeService();
 
     public static void main(String[] args) {
 
@@ -13,19 +18,17 @@ public class Application {
         System.out.println("-------------------------------------------");
         String choice = sc.nextLine();
 
+        //Storing an employee variable, so we can log in or register
+        Employee loggedInEmployee = null;
+
         if (choice.equals("1")){
 
-            System.out.println("Please enter your username:");
-            String username = sc.nextLine();
-            System.out.println("Please enter your password:");
-            String password = sc.nextLine();
-            //next we would implement checking the postgresql database to match the information
+            loggedInEmployee = es.login();
 
         } else if (choice.equals("2")){
-            System.out.println("Please enter your desired username:");
-            String username = sc.nextLine();
-            System.out.println("Please enter your desired password:");
-            String password = sc.nextLine();
+
+            //calling our registration method from EmployeeService
+            loggedInEmployee = es.register();
 
             //Here is where I would pass the username/pass to the database
 
@@ -34,7 +37,7 @@ public class Application {
             System.exit(0);
 
         }
-
+    System.exit(0);
 
     }
 }

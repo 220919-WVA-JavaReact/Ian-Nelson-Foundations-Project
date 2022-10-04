@@ -2,7 +2,7 @@ package com.revature.strings.foundationsProject.models;
 
 import java.util.Objects;
 
-public class Employees {
+public class Employee {
     // MAKE SURE THESE MATCH THE DATABASE BEFORE IMPLEMENTING
     // isManager? i don't think manger needs to be implemented yet but i'll add it for the future
     // and auto set it to false
@@ -18,14 +18,14 @@ public class Employees {
     // then equals() and hashcode
 
 
-    public Employees(int employeeID, String username, String password, boolean isManager) {
+    public Employee(int employeeID, String username, String password, boolean isManager) {
         this.employeeID = employeeID;
         this.username = username;
         this.password = password;
         this.isManager = isManager;
     }
 
-    public Employees(String username, String password, boolean isManager) {
+    public Employee(String username, String password, boolean isManager) {
         this.username = username;
         this.password = password;
         this.isManager = isManager;
@@ -65,7 +65,7 @@ public class Employees {
 
     @Override
     public String toString() {
-        return "Employees{" +
+        return "Employee{" +
                 "employeeID=" + employeeID +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
@@ -77,8 +77,8 @@ public class Employees {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Employees employees = (Employees) o;
-        return employeeID == employees.employeeID && isManager == employees.isManager && username.equals(employees.username) && password.equals(employees.password);
+        Employee employee = (Employee) o;
+        return employeeID == employee.employeeID && isManager == employee.isManager && username.equals(employee.username) && password.equals(employee.password);
     }
 
     @Override

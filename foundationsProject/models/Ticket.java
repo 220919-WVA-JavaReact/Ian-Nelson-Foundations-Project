@@ -2,7 +2,7 @@ package com.revature.strings.foundationsProject.models;
 
 import java.util.Objects;
 
-public class ReimbursementTicket {
+public class Ticket {
     //The reimbursement ticket will include a ticket id, the user id who made it, the amount
     // The description, and the status
     private int ticketId;
@@ -14,7 +14,7 @@ public class ReimbursementTicket {
     //going to make a couple methods, getters/setters, tostring/equals/hashcode override
 
 
-    public ReimbursementTicket(int ticketId, int userId, double amount, String description, boolean status) {
+    public Ticket(int ticketId, int userId, double amount, String description, boolean status) {
         this.ticketId = ticketId;
         this.userId = userId;
         this.amount = amount;
@@ -22,7 +22,7 @@ public class ReimbursementTicket {
         this.status = status;
     }
 
-    public ReimbursementTicket() {
+    public Ticket() {
     }
 
     public int getTicketId() {
@@ -67,7 +67,7 @@ public class ReimbursementTicket {
 
     @Override
     public String toString() {
-        return "ReimbursementTicket{" +
+        return "Ticket{" +
                 "ticketId=" + ticketId +
                 ", userId=" + userId +
                 ", amount=" + amount +
@@ -80,7 +80,7 @@ public class ReimbursementTicket {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ReimbursementTicket that = (ReimbursementTicket) o;
+        Ticket that = (Ticket) o;
         return ticketId == that.ticketId && userId == that.userId && Double.compare(that.amount, amount) == 0 && status == that.status && description.equals(that.description);
     }
 
