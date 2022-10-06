@@ -18,19 +18,20 @@ public class EmployeeDAOImplSQL implements EmployeeDAO{
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
 
-            ResultSet rs;
+            ResultSet rs = stmt.executeQuery();
 
-            if ((rs = stmt.executeQuery()) != null){
-                rs.next();
+            if (rs.next()){
                 int receivedId = rs.getInt("user_id");
                 String receivedUsername = rs.getString("username");
                 String receivedPassword = rs.getString("password");
 
                 employee = new Employee(receivedId, receivedUsername, receivedPassword);
+
             }
 
         } catch (SQLException e) {
-            System.out.println("Something went wrong.");
+            System.out.println("Something went wrong in employeeDAOsql");
+            e.printStackTrace();
         }
         return employee;
     }
@@ -58,7 +59,7 @@ public class EmployeeDAOImplSQL implements EmployeeDAO{
             }
 
         } catch (SQLException e) {
-            System.out.println("Unable to register user");
+            System.out.println("Unable to register user, credentials taken");
         }
 
         return employee;

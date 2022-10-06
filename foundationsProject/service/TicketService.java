@@ -16,19 +16,20 @@ public class TicketService {
     TicketDAO td = new TicketDAOImplSQL();
 
     public void createTicket(Employee employee){
+        Ticket ticket = null;
         System.out.println("Please enter a short description of your claim");
         String description = sc.nextLine();
         System.out.println("Please enter the amount of your claim in '00.00' format");
-        double amount = sc.nextDouble();
+        float amount = sc.nextFloat();
 
-        Ticket ticket = new Ticket(description, amount, employee);
+        ticket = new Ticket(description, amount, employee.getUserID());
 
-        boolean successful = td.createTicket(ticket);
+        boolean successful = td.createTicket(ticket, employee);
 
         if (successful){
             System.out.println("Successfully created a ticket!");
         }   else{
-            System.out.println("Something went wrong!");
+            System.out.println("Something went wrong in ticketservice");
         }
 
 

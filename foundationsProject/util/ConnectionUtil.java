@@ -26,7 +26,7 @@ public class ConnectionUtil {
         // If there is return it
 
         try {
-            if (conn != null && conn.isClosed()) {
+            if (conn != null && !conn.isClosed()) {
                 System.out.println("Use a previously made connection");
                 return conn;
             }

@@ -8,28 +8,31 @@ public class Ticket {
     private int ticketId;
     private String status;
     private String description;
-    private double amount;
-    private Employee user;
+    private float amount;
+
+    private int userID;
 
 
     //going to make a couple methods, getters/setters, tostring/equals/hashcode override
 
 
-    public Ticket(int ticketId, String status, String description, double amount, Employee user) {
+    public Ticket(int ticketId, String status, String description, float amount, int userID) {
         this.ticketId = ticketId;
         this.status = status;
         this.description = description;
         this.amount = amount;
-        this.user = user;
+        this.userID = userID;
     }
 
-    public Ticket(String description, double amount) {
+    public Ticket(String description, float amount) {
         this.description = description;
         this.amount = amount;
     }
 
-    public Ticket(String description, double amount, Employee employee) {
-
+    public Ticket(String description, float amount, int userID) {
+        this.description = description;
+        this.amount = amount;
+        this.userID = userID;
     }
 
     public int getTicketId() {
@@ -60,16 +63,16 @@ public class Ticket {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 
-    public Employee getUser() {
-        return user;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setUser(Employee user) {
-        this.user = user;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     @Override
@@ -79,7 +82,7 @@ public class Ticket {
                 ", status='" + status + '\'' +
                 ", description='" + description + '\'' +
                 ", amount=" + amount +
-                ", user=" + user +
+                ", user=" + userID +
                 '}';
     }
 
@@ -88,11 +91,11 @@ public class Ticket {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ticket ticket = (Ticket) o;
-        return ticketId == ticket.ticketId && Double.compare(ticket.amount, amount) == 0 && status.equals(ticket.status) && description.equals(ticket.description) && user.equals(ticket.user);
+        return ticketId == ticket.ticketId && Double.compare(ticket.amount, amount) == 0 && userID == ticket.userID && status.equals(ticket.status) && description.equals(ticket.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ticketId, status, description, amount, user);
+        return Objects.hash(ticketId, status, description, amount, userID);
     }
 }

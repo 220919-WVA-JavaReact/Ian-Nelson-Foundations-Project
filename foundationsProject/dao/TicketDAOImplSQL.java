@@ -1,5 +1,6 @@
 package com.revature.strings.foundationsProject.dao;
 
+import com.revature.strings.foundationsProject.models.Employee;
 import com.revature.strings.foundationsProject.models.Ticket;
 import com.revature.strings.foundationsProject.util.ConnectionUtil;
 
@@ -11,16 +12,15 @@ import java.util.List;
 public class TicketDAOImplSQL implements TicketDAO{
 
     @Override
-    public boolean createTicket(Ticket ticket) {
+    public boolean createTicket(Ticket ticket, Employee employee) {
 
         try (Connection conn = ConnectionUtil.getConnection()){
-            String sql = "INSERT INTO ticket VALUES (?,?)";
+            String sql = "INSERT INTO ticket (description, amount, user_id) VALUES (?,?,?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, ticket.getStatus());
-            stmt.setString(2, ticket.getDescription());
-            stmt.setDouble(3, ticket.getAmount());
+            stmt.setString(1, ticket.getDescription());
+            stmt.setFloat(2, (float) ticket.getAmount());
             //need clarification about what is happening below
-            stmt.setInt(4, ticket.getUser().getUserID());
+            stmt.setInt(3, employee.getUserID());
 
             int rowsUpdated = stmt.executeUpdate();
 
@@ -29,7 +29,8 @@ public class TicketDAOImplSQL implements TicketDAO{
             }
 
         } catch (SQLException e) {
-            System.out.println("Something went wrong!");
+            System.out.println("Something went wrong in ticketDAOSQL!");
+            e.printStackTrace();
         }
 
         return false;

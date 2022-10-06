@@ -25,7 +25,7 @@ public class Application {
 
                 switch (choice) {
                     case "1":
-                        es.login();
+                        loggedInUser = es.login();
                         break;
                     case "2":
                         es.register();
