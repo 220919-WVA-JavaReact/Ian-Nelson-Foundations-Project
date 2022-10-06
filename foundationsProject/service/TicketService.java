@@ -1,7 +1,9 @@
 package com.revature.strings.foundationsProject.service;
 
 import com.revature.strings.foundationsProject.dao.TicketDAO;
-import com.revature.strings.foundationsProject.dao.TicketDAOImpl;
+import com.revature.strings.foundationsProject.dao.TicketDAOImplSQL;
+import com.revature.strings.foundationsProject.models.Employee;
+import com.revature.strings.foundationsProject.models.Ticket;
 
 import java.util.Scanner;
 
@@ -11,19 +13,26 @@ public class TicketService {
     Scanner sc = new Scanner(System.in);
 
     //making an instance of the dao at the class level so I can call upon it
-    TicketDAO td = new TicketDAOImpl();
+    TicketDAO td = new TicketDAOImplSQL();
 
-    public void createTicket(){
-        System.out.println("Please enter the amount you want reimbursed");
-        double ticketAmount = sc.nextDouble();
-
-        System.out.println("Please enter a description of your claim");
+    public void createTicket(Employee employee){
+        System.out.println("Please enter a short description of your claim");
         String description = sc.nextLine();
+        System.out.println("Please enter the amount of your claim in '00.00' format");
+        double amount = sc.nextDouble();
 
-        //Will need a way to pass the employee id to the ticket
-        //Will also automatically want to assign it an unresolved status
+        Ticket ticket = new Ticket(description, amount, employee);
 
-        td.createTicket(ticketAmount, description);
+        boolean successful = td.createTicket(ticket);
+
+        if (successful){
+            System.out.println("Successfully created a ticket!");
+        }   else{
+            System.out.println("Something went wrong!");
+        }
+
+
+
     }
 
 }

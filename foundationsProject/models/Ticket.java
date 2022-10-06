@@ -28,6 +28,10 @@ public class Ticket {
         this.amount = amount;
     }
 
+    public Ticket(String description, double amount, Employee employee) {
+
+    }
+
     public int getTicketId() {
         return ticketId;
     }
