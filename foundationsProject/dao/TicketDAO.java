@@ -8,7 +8,7 @@ public interface TicketDAO {
 
     //creating a create ticket method
 
-    Ticket createTicket(double amount, String description);
+    boolean createTicket(Ticket ticket);
 
     //not sure what this is for, but we made it during lecture, so I'm going to hold onto it
     List<Ticket> getAllTicket();

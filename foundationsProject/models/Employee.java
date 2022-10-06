@@ -7,36 +7,22 @@ public class Employee {
     // isManager? i don't think manger needs to be implemented yet but i'll add it for the future
     // and auto set it to false
 
-    private int employeeID;
+    private int userID;
     private String username;
     private String password;
-    private boolean isManager;
 
-    // alt+insert to generate
-    // when sure of our fields, generate 3 constructs, one with all, one without ID, one with none
-    // then generate getters and setters for all
-    // then equals() and hashcode
-
-
-    public Employee(int employeeID, String username, String password, boolean isManager) {
-        this.employeeID = employeeID;
+    public Employee(int userID, String username, String password) {
+        this.userID = userID;
         this.username = username;
         this.password = password;
-        this.isManager = isManager;
     }
 
-    public Employee(String username, String password, boolean isManager) {
-        this.username = username;
-        this.password = password;
-        this.isManager = isManager;
+    public int getUserID() {
+        return userID;
     }
 
-    public int getEmployeeID() {
-        return employeeID;
-    }
-
-    public void setEmployeeID(int employeeID) {
-        this.employeeID = employeeID;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     public String getUsername() {
@@ -55,21 +41,12 @@ public class Employee {
         this.password = password;
     }
 
-    public boolean isManager() {
-        return isManager;
-    }
-
-    public void setManager(boolean manager) {
-        isManager = manager;
-    }
-
     @Override
     public String toString() {
         return "Employee{" +
-                "employeeID=" + employeeID +
+                "userID=" + userID +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", isManager=" + isManager +
                 '}';
     }
 
@@ -78,13 +55,11 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return employeeID == employee.employeeID && isManager == employee.isManager && username.equals(employee.username) && password.equals(employee.password);
+        return userID == employee.userID && username.equals(employee.username) && password.equals(employee.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(employeeID, username, password, isManager);
+        return Objects.hash(userID, username, password);
     }
-
-
 }

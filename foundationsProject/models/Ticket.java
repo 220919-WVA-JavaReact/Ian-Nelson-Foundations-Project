@@ -6,23 +6,26 @@ public class Ticket {
     //The reimbursement ticket will include a ticket id, the user id who made it, the amount
     // The description, and the status
     private int ticketId;
-    private int userId;
-    private double amount;
+    private String status;
     private String description;
-    private boolean status;
+    private double amount;
+    private Employee user;
+
 
     //going to make a couple methods, getters/setters, tostring/equals/hashcode override
 
 
-    public Ticket(int ticketId, int userId, double amount, String description, boolean status) {
+    public Ticket(int ticketId, String status, String description, double amount, Employee user) {
         this.ticketId = ticketId;
-        this.userId = userId;
-        this.amount = amount;
-        this.description = description;
         this.status = status;
+        this.description = description;
+        this.amount = amount;
+        this.user = user;
     }
 
-    public Ticket() {
+    public Ticket(String description, double amount) {
+        this.description = description;
+        this.amount = amount;
     }
 
     public int getTicketId() {
@@ -33,20 +36,12 @@ public class Ticket {
         this.ticketId = ticketId;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getStatus() {
+        return status;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getDescription() {
@@ -57,22 +52,30 @@ public class Ticket {
         this.description = description;
     }
 
-    public boolean isStatus() {
-        return status;
+    public double getAmount() {
+        return amount;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public Employee getUser() {
+        return user;
+    }
+
+    public void setUser(Employee user) {
+        this.user = user;
     }
 
     @Override
     public String toString() {
         return "Ticket{" +
                 "ticketId=" + ticketId +
-                ", userId=" + userId +
-                ", amount=" + amount +
+                ", status='" + status + '\'' +
                 ", description='" + description + '\'' +
-                ", status=" + status +
+                ", amount=" + amount +
+                ", user=" + user +
                 '}';
     }
 
@@ -80,13 +83,12 @@ public class Ticket {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Ticket that = (Ticket) o;
-        return ticketId == that.ticketId && userId == that.userId && Double.compare(that.amount, amount) == 0 && status == that.status && description.equals(that.description);
+        Ticket ticket = (Ticket) o;
+        return ticketId == ticket.ticketId && Double.compare(ticket.amount, amount) == 0 && status.equals(ticket.status) && description.equals(ticket.description) && user.equals(ticket.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ticketId, userId, amount, description, status);
+        return Objects.hash(ticketId, status, description, amount, user);
     }
-
 }
