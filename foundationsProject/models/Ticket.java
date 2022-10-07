@@ -24,6 +24,13 @@ public class Ticket {
         this.userID = userID;
     }
 
+    public Ticket(int ticketId, String description, String status, float amount) {
+        this.ticketId = ticketId;
+        this.status = status;
+        this.description = description;
+        this.amount = amount;
+    }
+
     public Ticket(String description, float amount) {
         this.description = description;
         this.amount = amount;

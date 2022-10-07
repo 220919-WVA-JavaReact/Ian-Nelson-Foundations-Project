@@ -6,7 +6,10 @@ import com.revature.strings.foundationsProject.util.ConnectionUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TicketDAOImplSQL implements TicketDAO{
@@ -36,24 +39,54 @@ public class TicketDAOImplSQL implements TicketDAO{
         return false;
     }
 
-
-
-
-
+    @Override
+    public ArrayList<Ticket> getAllTicket() {
+        return null;
+    }
 
 
     @Override
-    public List<Ticket> getAllTicket() {
-        return null;
+    public ArrayList<Ticket> getAllTicket(Employee employee) {
+        List<Ticket> ticketList = new ArrayList<>();
+
+        try (Connection conn = ConnectionUtil.getConnection()){
+            String sql = "SELECT * FROM ticket WHERE user_id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, employee.getUserID());
+            ResultSet rs;
+            if ((rs = ps.executeQuery()) != null) {
+               while (rs.next()) {
+                   int ticketID = rs.getInt("ticket_id");
+                   String description = rs.getString("description");
+                   float amount = rs.getFloat("amount");
+                   String status = rs.getString("status");
+                   ticketList.add(new Ticket(ticketID, description, status, amount));
+               }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return (ArrayList<Ticket>) ticketList;
     }
+
+
+
+
 
     @Override
     public List<Ticket> getTicketsByEmployeeId(int id) {
         return null;
     }
 
+
+
+
+
     @Override
     public boolean updateTicket(Ticket ticket) {
         return false;
     }
+
+
 }

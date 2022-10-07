@@ -38,13 +38,16 @@ public class Application {
                 }
 
             } else {
-                System.out.println("To submit a Reimbursement Ticket enter 1, or press 2 to Quit");
+                System.out.println("To submit a Reimbursement Ticket enter 1, enter 2 to view your Tickets, or enter 3 to Quit.");
                 String choice = sc.nextLine();
                 switch (choice) {
                     case "1":
                         ts.createTicket(loggedInUser);
                         break;
                     case "2":
+                        ts.getTicketById(loggedInUser);
+                        break;
+                    case "3":
                         running = false;
                         break;
                     default:
