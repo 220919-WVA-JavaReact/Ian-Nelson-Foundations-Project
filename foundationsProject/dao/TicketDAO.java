@@ -19,7 +19,15 @@ public interface TicketDAO {
     List<Ticket> getTicketsByEmployeeId(int id);
 
     //using a boolean to be able to send in a ticket and have it be able to update
-    boolean updateTicket(Ticket ticket);
+    void approveTicket(Ticket ticket);
+
+    void denyTicket(Ticket ticket);
+
+
+
+    ArrayList<Ticket> getAllPendingTicket();
 
     List<Ticket> getAllTicket(Employee employee);
+
+    Ticket getByTicketID(int ticketID);
 }

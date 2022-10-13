@@ -24,8 +24,9 @@ public class EmployeeDAOImplSQL implements EmployeeDAO{
                 int receivedId = rs.getInt("user_id");
                 String receivedUsername = rs.getString("username");
                 String receivedPassword = rs.getString("password");
+                String receivedRole = rs.getString("user_role");
 
-                employee = new Employee(receivedId, receivedUsername, receivedPassword);
+                employee = new Employee(receivedId, receivedUsername, receivedPassword, receivedRole);
 
             }
 
@@ -54,7 +55,40 @@ public class EmployeeDAOImplSQL implements EmployeeDAO{
                 int receivedId = rs.getInt("user_id");
                 String receivedUsername = rs.getString("username");
                 String receivedPassword = rs.getString("password");
+                String receivedRole = rs.getString("user_role");
 
+                employee = new Employee(receivedId, receivedUsername, receivedPassword, receivedRole);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Unable to register user, credentials taken");
+        }
+
+        return employee;
+    }
+
+    @Override
+    public Employee createEmployeeManager(String username, String password, String userRole) {
+        Employee employee = new Employee();
+
+        //finish this after employee service, with manager values
+        try (Connection conn = ConnectionUtil.getConnection()){
+            String sql = "INSERT INTO users (username, password, user_role) VALUES (?,?,?) RETURNING *";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            stmt.setString(3, userRole);
+
+            ResultSet rs;
+
+            if ((rs = stmt.executeQuery()) != null){
+                rs.next();
+                int receivedId = rs.getInt("user_id");
+                String receivedUsername = rs.getString("username");
+                String receivedPassword = rs.getString("password");
+                String receivedManager = rs.getString("user_role");
+
+                //todo refacotr employee to include userRole
                 employee = new Employee(receivedId, receivedUsername, receivedPassword);
             }
 
@@ -64,5 +98,8 @@ public class EmployeeDAOImplSQL implements EmployeeDAO{
 
         return employee;
     }
+
+
+
 
 }

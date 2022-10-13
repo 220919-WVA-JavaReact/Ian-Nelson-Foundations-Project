@@ -42,6 +42,17 @@ public class Ticket {
         this.userID = userID;
     }
 
+    public Ticket(int ticketId) {
+        this.ticketId = ticketId;
+    }
+
+    public Ticket() {
+
+    }
+
+    public Ticket(int ticketID, String description, float amount, String status) {
+    }
+
     public int getTicketId() {
         return ticketId;
     }

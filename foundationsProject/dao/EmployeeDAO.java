@@ -12,5 +12,7 @@ public interface EmployeeDAO {
     //how do we implement for ID and isManager?
     Employee createEmployee(String username, String password);
 
+    Employee createEmployeeManager(String username, String password, String userRole);
+
 
 }

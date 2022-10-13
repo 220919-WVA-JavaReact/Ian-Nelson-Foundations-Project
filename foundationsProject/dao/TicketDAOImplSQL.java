@@ -8,16 +8,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TicketDAOImplSQL implements TicketDAO{
+public class TicketDAOImplSQL implements TicketDAO {
 
     @Override
     public boolean createTicket(Ticket ticket, Employee employee) {
 
-        try (Connection conn = ConnectionUtil.getConnection()){
+        try (Connection conn = ConnectionUtil.getConnection()) {
             String sql = "INSERT INTO ticket (description, amount, user_id) VALUES (?,?,?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, ticket.getDescription());
@@ -27,7 +26,7 @@ public class TicketDAOImplSQL implements TicketDAO{
 
             int rowsUpdated = stmt.executeUpdate();
 
-            if (rowsUpdated == 1){
+            if (rowsUpdated == 1) {
                 return true;
             }
 
@@ -44,34 +43,87 @@ public class TicketDAOImplSQL implements TicketDAO{
         return null;
     }
 
+    @Override
+    public ArrayList<Ticket> getAllPendingTicket() {
+        //get all pending tickets
+        List<Ticket> ticketList = new ArrayList<>();
+
+        try (Connection conn = ConnectionUtil.getConnection()) {
+            String sql = "SELECT * FROM ticket WHERE status = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, "Pending");
+            ResultSet rs;
+
+            if ((rs = ps.executeQuery()) != null) {
+                while (rs.next()) {
+                    int ticketID = rs.getInt("ticket_id");
+                    String description = rs.getString("description");
+                    float amount = rs.getFloat("amount");
+                    String status = rs.getString("status");
+                    ticketList.add(new Ticket(ticketID, description, status, amount));
+                }
+            }
+        } catch (Exception e) {
+            //add sout and make desc & amount NOT NULL
+            e.printStackTrace();
+        }
+
+        return (ArrayList<Ticket>) ticketList;
+
+    }
+
 
     @Override
     public ArrayList<Ticket> getAllTicket(Employee employee) {
         List<Ticket> ticketList = new ArrayList<>();
 
-        try (Connection conn = ConnectionUtil.getConnection()){
+        try (Connection conn = ConnectionUtil.getConnection()) {
             String sql = "SELECT * FROM ticket WHERE user_id = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, employee.getUserID());
             ResultSet rs;
             if ((rs = ps.executeQuery()) != null) {
-               while (rs.next()) {
-                   int ticketID = rs.getInt("ticket_id");
-                   String description = rs.getString("description");
-                   float amount = rs.getFloat("amount");
-                   String status = rs.getString("status");
-                   ticketList.add(new Ticket(ticketID, description, status, amount));
-               }
+                while (rs.next()) {
+                    int ticketID = rs.getInt("ticket_id");
+                    String description = rs.getString("description");
+                    float amount = rs.getFloat("amount");
+                    String status = rs.getString("status");
+                    ticketList.add(new Ticket(ticketID, description, status, amount));
+                }
             }
         } catch (Exception e) {
+            //add sout and make desc & amount NOT NULL
             e.printStackTrace();
         }
 
         return (ArrayList<Ticket>) ticketList;
     }
 
+    public Ticket getByTicketID(int id) {
+        Ticket ticket = new Ticket();
+        System.out.println(id);
 
+        try (Connection conn = ConnectionUtil.getConnection()) {
+            String sql = "SELECT * FROM ticket WHERE ticket_id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs;
+            if ((rs = ps.executeQuery()) != null) {
+                    rs.next();
+                    int ticketID = rs.getInt("ticket_id");
+                    String description = rs.getString("description");
+                    float amount = rs.getFloat("amount");
+                    String status = rs.getString("status");
 
+                    ticket = new Ticket(ticketID, description, amount, status);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("Ticket retrieved");
+        return ticket;
+    }
 
 
     @Override
@@ -80,13 +132,27 @@ public class TicketDAOImplSQL implements TicketDAO{
     }
 
 
-
-
-
     @Override
-    public boolean updateTicket(Ticket ticket) {
-        return false;
+    public void approveTicket(Ticket ticket) {
+
+        //todo cant get approveticket to approve the ticket...
+        try (Connection conn = ConnectionUtil.getConnection()) {
+            String sql = "UPDATE ticket SET status = ? WHERE ticket_id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, "Approved");
+            ps.setInt(2, ticket.getTicketId());
+            ps.executeUpdate();
+
+            return;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
+    @Override
+    public void denyTicket(Ticket ticket) {
 
+    }
 }

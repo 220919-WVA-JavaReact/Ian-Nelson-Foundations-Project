@@ -52,7 +52,51 @@ public class TicketService {
         System.out.println("------------------------");
     }
 
-    public void viewAllTickets(Employee employee){
+
+
+    public void viewPendingTickets(){
+        ArrayList<Ticket> tickets = (ArrayList<Ticket>) td.getAllPendingTicket();
+        System.out.println("There are " + tickets.size() + "PENDING tickets.");
+
+        for (Ticket ticket : tickets){
+            System.out.println("----------------------");
+            System.out.println("Ticket ID: " + ticket.getTicketId());
+            System.out.println("Description: " + ticket.getDescription());
+            System.out.println("Amount: " + df.format((ticket.getAmount())));
+            System.out.println("Status: " + ticket.getStatus());
+        }
+        System.out.println("There are " + tickets.size() + "PENDING tickets.");
+        System.out.println("------------------------");
+    }
+
+    public void updateTicket(){
+        //we need to get a ticket by ticket id
+        System.out.println("Please enter the ticket ID");
+        int ticketID = sc.nextInt();
+
+        Ticket ticket = td.getByTicketID(ticketID);
+
+        //list ticket info here, see above
+
+        System.out.println("Press 1 to Approve, 2 to Deny, 3 to Exit");
+        sc.nextLine();
+        String choice = sc.nextLine();
+        switch (choice) {
+            case "1":
+                td.approveTicket(ticket);
+                //UPDATE tickets SET status = Approved WHERE tick_id = ?
+                break;
+            case "2":
+                //deny ticket
+                break;
+            case "3":
+                break;
+
+        }
 
     }
+
+   // public void viewAllTickets(Employee employee){
+
+
 }

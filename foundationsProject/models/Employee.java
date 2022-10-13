@@ -11,6 +11,8 @@ public class Employee {
     private String username;
     private String password;
 
+    private String userRole;
+
     public Employee(int userID, String username, String password) {
         this.userID = userID;
         this.username = username;
@@ -23,6 +25,13 @@ public class Employee {
     public Employee(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public Employee(int userID, String username, String password, String userRole) {
+        this.userID = userID;
+        this.username = username;
+        this.password = password;
+        this.userRole = userRole;
     }
 
     public int getUserID() {
@@ -49,13 +58,12 @@ public class Employee {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "userID=" + userID +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 
     @Override
@@ -63,11 +71,21 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return userID == employee.userID && username.equals(employee.username) && password.equals(employee.password);
+        return userID == employee.userID && Objects.equals(username, employee.username) && Objects.equals(password, employee.password) && Objects.equals(userRole, employee.userRole);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userID, username, password);
+        return Objects.hash(userID, username, password, userRole);
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "userID=" + userID +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", userRole='" + userRole + '\'' +
+                '}';
     }
 }

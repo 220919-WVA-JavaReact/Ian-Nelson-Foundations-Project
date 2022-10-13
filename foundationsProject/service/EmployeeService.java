@@ -56,6 +56,22 @@ public class EmployeeService {
 
     }
 
+    public Employee registerManager(){
+        System.out.println("Please enter your username");
+        String username = sc.nextLine();
+        System.out.println("Please enter your password");
+        String password = sc.nextLine();
+        String manager = "Manager";
+
+        //calling the dao method to create an employee
+        Employee employee = ed.createEmployeeManager(username,password,manager);
+        if (employee.getUserID() != 0) {
+            System.out.println("Account successfully registered");
+            return employee;
+        }
+        return null;
+
+    }
 
 
 }
