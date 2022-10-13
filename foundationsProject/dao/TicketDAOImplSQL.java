@@ -107,21 +107,24 @@ public class TicketDAOImplSQL implements TicketDAO {
             String sql = "SELECT * FROM ticket WHERE ticket_id = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
-            ResultSet rs;
-            if ((rs = ps.executeQuery()) != null) {
+            ResultSet rs = ps.executeQuery();
+            if (rs != null){
                     rs.next();
                     int ticketID = rs.getInt("ticket_id");
                     String description = rs.getString("description");
                     float amount = rs.getFloat("amount");
                     String status = rs.getString("status");
 
-                    ticket = new Ticket(ticketID, description, amount, status);
+                    ticket = new Ticket(ticketID, description, status, amount);
 
+            } else {
+                System.out.println("Ticket not being passed through getbyticketid");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         System.out.println("Ticket retrieved");
+        //START DEBUGGING PROCESS HERE
         return ticket;
     }
 
@@ -133,7 +136,7 @@ public class TicketDAOImplSQL implements TicketDAO {
 
 
     @Override
-    public void approveTicket(Ticket ticket) {
+    public boolean approveTicket(Ticket ticket) {
 
         //todo cant get approveticket to approve the ticket...
         try (Connection conn = ConnectionUtil.getConnection()) {
@@ -141,15 +144,21 @@ public class TicketDAOImplSQL implements TicketDAO {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, "Approved");
             ps.setInt(2, ticket.getTicketId());
-            ps.executeUpdate();
 
-            return;
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return true;
+            }
+
         } catch (SQLException e) {
+            System.out.println("Something went wrong in ticketDAOSQL!");
             e.printStackTrace();
         }
 
-
+        return false;
     }
+
 
     @Override
     public void denyTicket(Ticket ticket) {

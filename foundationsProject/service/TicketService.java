@@ -83,7 +83,13 @@ public class TicketService {
         String choice = sc.nextLine();
         switch (choice) {
             case "1":
-                td.approveTicket(ticket);
+                boolean successful = td.approveTicket(ticket);
+
+                if (successful) {
+                    System.out.println("Ticket approved");
+                } else {
+                    System.out.println("Something went wrong");
+                }
                 //UPDATE tickets SET status = Approved WHERE tick_id = ?
                 break;
             case "2":
