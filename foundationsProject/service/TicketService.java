@@ -79,6 +79,7 @@ public class TicketService {
         //list ticket info here, see above
 
         System.out.println("Press 1 to Approve, 2 to Deny, 3 to Exit");
+        System.out.println("You can only Approve or Deny currently Pending tickets.");
         sc.nextLine();
         String choice = sc.nextLine();
         switch (choice) {
@@ -88,14 +89,18 @@ public class TicketService {
                 if (successful) {
                     System.out.println("Ticket approved");
                 } else {
-                    System.out.println("Something went wrong");
+                    System.out.println("You can only Approve tickets that are Pending");
                 }
                 //UPDATE tickets SET status = Approved WHERE tick_id = ?
                 break;
             case "2":
                 String answer2 = "Denied";
                 boolean success = td.approveTicket(ticket, answer2);
-                //deny ticket
+                if (success) {
+                    System.out.println("Ticket Denied");
+                } else {
+                    System.out.println("You can only Deny tickets that are Pending");
+                }
                 break;
             case "3":
                 break;

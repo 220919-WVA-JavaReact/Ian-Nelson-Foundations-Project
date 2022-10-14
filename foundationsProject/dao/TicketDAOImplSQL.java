@@ -140,10 +140,11 @@ public class TicketDAOImplSQL implements TicketDAO {
 
         //todo cant get approveticket to approve the ticket...
         try (Connection conn = ConnectionUtil.getConnection()) {
-            String sql = "UPDATE ticket SET status = ? WHERE ticket_id = ?";
+            String sql = "UPDATE ticket SET status = ? WHERE ticket_id = ? AND status = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, answer);
             ps.setInt(2, ticket.getTicketId());
+            ps.setString(3, "Pending");
 
             int result = ps.executeUpdate();
 
