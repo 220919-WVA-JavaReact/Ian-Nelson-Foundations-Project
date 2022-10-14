@@ -25,18 +25,24 @@ public class TicketService {
         System.out.println("Please enter a short description of your claim");
         String description = sc.nextLine();
         System.out.println("Please enter the amount of your claim in '00.00' format");
-        float amount = sc.nextFloat();
+        String amount = sc.nextLine();
 
-        ticket = new Ticket(description, amount, employee.getUserID());
+        //if code bugs its from here
+        //changing initial float to string then parsing it to float
+        if (description.trim().equals("") || (amount.trim().equals(""))){
+            System.out.println("Description and amount must not be blank.");
+        } else {
 
-        boolean successful = td.createTicket(ticket, employee);
+            ticket = new Ticket(description, Float.parseFloat(amount), employee.getUserID());
 
-        if (successful){
-            System.out.println("Successfully created a ticket!");
-        }   else{
-            System.out.println("Something went wrong in ticketservice");
+            boolean successful = td.createTicket(ticket, employee);
+
+            if (successful) {
+                System.out.println("Successfully created a ticket!");
+            } else {
+                System.out.println("Something went wrong in ticketservice");
+            }
         }
-
     }
     public void getTicketById(Employee employee){
         ArrayList<Ticket> tickets = (ArrayList<Ticket>) td.getAllTicket(employee);
