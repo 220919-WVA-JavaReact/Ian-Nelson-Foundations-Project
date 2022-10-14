@@ -145,9 +145,9 @@ public class TicketDAOImplSQL implements TicketDAO {
             ps.setString(1, "Approved");
             ps.setInt(2, ticket.getTicketId());
 
-            ResultSet rs = ps.executeQuery();
+            int result = ps.executeUpdate();
 
-            if (rs.next()) {
+            if (result == 1) {
                 return true;
             }
 
