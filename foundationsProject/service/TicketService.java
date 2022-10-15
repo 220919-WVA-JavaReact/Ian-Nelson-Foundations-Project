@@ -27,7 +27,7 @@ public class TicketService {
         System.out.println("Please enter the amount of your claim in '00.00' format");
         String amount = sc.nextLine();
 
-        //if code bugs its from here
+
         //changing initial float to string then parsing it to float
         if (description.trim().equals("") || (amount.trim().equals(""))){
             System.out.println("Description and amount must not be blank.");
