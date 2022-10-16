@@ -35,12 +35,20 @@ public class AuthServlet extends HttpServlet {
         System.out.println("[LOG] - AuthServlet received a POST request at " + LocalDateTime.now());
 
         if (req.getParameter("action").equals("register")) {
+            //todo refactor register to return username taken in postman
             //this should grab the input from our postman and put it into our employee java object of Employee class
             Employee employee = mapper.readValue(req.getInputStream(), Employee.class);
-            Employee employ = esa.register(employee.getUsername(), employee.getPassword());
-            String respPayload = mapper.writeValueAsString(employ);
-            resp.getWriter().write(respPayload);
+            String payload = esa.register(employee.getUsername(), employee.getPassword());
+            if (payload.equals("username")) {
+                resp.setStatus(400);
+                resp.getWriter().write("Username taken");
+            } else {
+                resp.setStatus(200);
+                resp.getWriter().write("Successfully registered");
+                resp.getWriter().write(payload);
+            }
 
+            //LOGIN
         } else if (req.getParameter("action").equals("login")) {
             Employee employee = mapper.readValue(req.getInputStream(), Employee.class);
 

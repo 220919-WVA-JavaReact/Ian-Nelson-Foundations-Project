@@ -8,14 +8,16 @@ public class EmployeeServiceAPI {
     EmployeeDAO ed = new EmployeeDAOImplSQL();
 
 
-    public Employee register(String username, String password) {
+    public String register(String username, String password) {
         Employee employee = new Employee();
         employee = ed.createEmployee(username, password);
         if (employee.getUserID() != 0) {
             System.out.println("Account successfully registered");
-            return employee;
+            return employee.toString();
+        } else {
+            return "username";
         }
-        return null;
+
     }
 
     public String login(String username, String password) {
