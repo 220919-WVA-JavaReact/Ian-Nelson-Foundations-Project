@@ -8,7 +8,7 @@ public class EmployeeServiceAPI {
     EmployeeDAO ed = new EmployeeDAOImplSQL();
 
 
-    public Employee Register (String username, String password) {
+    public Employee register(String username, String password) {
         Employee employee = new Employee();
         employee = ed.createEmployee(username, password);
         if (employee.getUserID() != 0) {
@@ -17,4 +17,22 @@ public class EmployeeServiceAPI {
         }
         return null;
     }
+
+    public String login(String username, String password) {
+        Employee employ = new Employee();
+        employ = ed.getByUsername(username);
+        if (employ.getUserID() == 0) {
+            return "username";
+        } else {
+            if (employ.getPassword().equals(password)) {
+                System.out.println("You have been logged in!");
+                return employ.toString();
+            } else {
+                System.out.println("Password does not match");
+                return "password";
+            }
+
+        }
+    }
+
 }

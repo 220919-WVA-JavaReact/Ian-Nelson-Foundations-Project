@@ -88,4 +88,12 @@ public class Employee {
                 ", userRole='" + userRole + '\'' +
                 '}';
     }
+
+    public String toJsonString() {
+        return "{\"id\":" + userID + ", " +
+                "\"username\":\"" + username + "\", " +
+                "\"password\":\"" + password + "\", " +
+                "\"userRole=\":\"" + userRole + "\"" +
+                "}";
+    }
 }
