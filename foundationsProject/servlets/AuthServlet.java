@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
@@ -44,12 +45,13 @@ public class AuthServlet extends HttpServlet {
                 resp.getWriter().write("Username taken");
             } else {
                 resp.setStatus(200);
-                resp.getWriter().write("Successfully registered");
+                resp.getWriter().write("Successfully registered: ");
                 resp.getWriter().write(payload);
             }
 
             //LOGIN
         } else if (req.getParameter("action").equals("login")) {
+            HttpSession session;
             Employee employee = mapper.readValue(req.getInputStream(), Employee.class);
 
             String payload = esa.login(employee.getUsername(), employee.getPassword());
@@ -61,8 +63,11 @@ public class AuthServlet extends HttpServlet {
                 resp.setStatus(400);
                 resp.getWriter().write("Password does not match.");
             } else {
-                //Employee employ = mapper.readValue(payload, Employee.class);
+               //Employee employ = mapper.readValue(payload, Employee.class);
+                //resp.getWriter().write(employ.toJsonString());
                 //todo session work
+                session = req.getSession();
+                session.setAttribute("auth-user", mapper.writeValueAsString(payload));
                 resp.setStatus(200);
                 resp.getWriter().write(payload);
             }
