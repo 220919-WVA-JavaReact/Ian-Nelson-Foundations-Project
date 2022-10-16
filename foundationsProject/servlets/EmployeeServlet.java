@@ -92,7 +92,7 @@ public class EmployeeServlet extends HttpServlet {
                 resp.getWriter().write("Successfully submitted ticket.");
             } else {
                 resp.setStatus(400);
-                resp.getWriter().write("Something went wrong, eservlet");
+                resp.getWriter().write("Something went wrong, servlet");
             }
 
 

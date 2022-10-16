@@ -28,13 +28,10 @@ public class TicketServiceAPI {
     }
 
 
-
-        //Employee loggedInEmployee =
-        //ticket = new Ticket(description, amount, employee.getUserID); this will create the ticket after we get the
-        //                                                              logged in user
-        //then we will send to ticketDAO
-
-    //}
+    public List<Ticket> viewPendingTickets(){
+        List<Ticket> tickets = td.getAllPendingTicket();
+        return tickets;
+    }
 
     public List<Ticket> viewAllTickets(Employee employee){
         List<Ticket> tickets = td.getAllTicket(employee);
