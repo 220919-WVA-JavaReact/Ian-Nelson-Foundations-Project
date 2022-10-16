@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.strings.foundationsProject.models.Employee;
 import com.revature.strings.foundationsProject.models.Ticket;
 import com.revature.strings.foundationsProject.service.EmployeeServiceAPI;
+import com.revature.strings.foundationsProject.service.TicketServiceAPI;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +20,7 @@ import java.util.HashMap;
 @WebServlet("/employee")
 public class EmployeeServlet extends HttpServlet {
     EmployeeServiceAPI esa = new EmployeeServiceAPI();
+    TicketServiceAPI tsa = new TicketServiceAPI();
     ObjectMapper mapper = new ObjectMapper();
 
 
@@ -71,6 +73,18 @@ public class EmployeeServlet extends HttpServlet {
             //we want to take the description, the amount, and the auth user id and pass it to create a ticket
             Ticket ticket = mapper.readValue(req.getInputStream(), Ticket.class);
             resp.setStatus(200);
+
+            String description = ticket.getDescription();
+            float amount = (float)ticket.getAmount();
+            boolean success = tsa.createTicketAPI(description, amount, loggedInEmploy);
+
+            if (success) {
+                resp.setStatus(200);
+                resp.getWriter().write("Successfully submitted ticket.");
+            } else {
+                resp.setStatus(400);
+                resp.getWriter().write("Something went wrong, eservlet");
+            }
 
 
             //resp.getWriter().write(mapper.writeValueAsString(ticket));

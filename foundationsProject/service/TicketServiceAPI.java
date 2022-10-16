@@ -17,10 +17,14 @@ public class TicketServiceAPI {
     //can i check to see if a session is null in a single method before all methods in this class/servlet?
 
 
-    //public String createTicketAPI(String description, float amount, int id){
-       // Ticket ticket = new Ticket();
+    public boolean createTicketAPI(String description, float amount, Employee employee) {
+        Ticket ticket = null;
+        ticket = new Ticket(description, amount, employee.getUserID());
 
+        boolean successful = td.createTicket(ticket, employee);
+        return successful;
 
+    }
 
 
 
