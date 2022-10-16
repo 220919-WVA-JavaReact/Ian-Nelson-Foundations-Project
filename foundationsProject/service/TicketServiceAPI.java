@@ -8,6 +8,7 @@ import com.revature.strings.foundationsProject.models.Ticket;
 
 import javax.net.ssl.HandshakeCompletedEvent;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 public class TicketServiceAPI {
     TicketDAO td = new TicketDAOImplSQL();
@@ -35,8 +36,10 @@ public class TicketServiceAPI {
 
     //}
 
-    //public String getTicketsByUser(int id){
+    public List<Ticket> viewAllTickets(Employee employee){
+        List<Ticket> tickets = td.getAllTicket(employee);
 
-   // }
+        return tickets;
+    }
 
 }

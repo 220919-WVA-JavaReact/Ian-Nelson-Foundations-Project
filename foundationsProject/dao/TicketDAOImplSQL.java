@@ -88,7 +88,8 @@ public class TicketDAOImplSQL implements TicketDAO {
                     String description = rs.getString("description");
                     float amount = rs.getFloat("amount");
                     String status = rs.getString("status");
-                    ticketList.add(new Ticket(ticketID, description, status, amount));
+                    int userID = rs.getInt("user_id");
+                    ticketList.add(new Ticket(ticketID, description, status, amount, userID));
                 }
             }
         } catch (Exception e) {

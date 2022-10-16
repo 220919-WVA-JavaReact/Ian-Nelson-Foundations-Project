@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 
 @WebServlet("/employee")
 public class EmployeeServlet extends HttpServlet {
@@ -42,7 +43,16 @@ public class EmployeeServlet extends HttpServlet {
             return;
         } else {
             Employee loggedInEmploy = (Employee) session.getAttribute("auth-user");
+            resp.getWriter().write(mapper.writeValueAsString(loggedInEmploy));
             //we now have the sessions info, now to call for ticket
+            TicketServiceAPI tsa = new TicketServiceAPI();
+
+            List<Ticket> tickets = tsa.viewAllTickets(loggedInEmploy);
+
+            if (tickets != null) {
+                resp.setStatus(200);
+                resp.getWriter().write(mapper.writeValueAsString(tickets));
+            }
 
         }
 
@@ -67,7 +77,6 @@ public class EmployeeServlet extends HttpServlet {
             resp.getWriter().write(mapper.writeValueAsString(errorMessage));
             return;
         } else {
-            //Employee loggedInEmploy = mapper.readValue(session.getAttribute("auth-user"), Employee.class);
             Employee loggedInEmploy = (Employee) session.getAttribute("auth-user");
             resp.getWriter().write(mapper.writeValueAsString(loggedInEmploy));
             //we want to take the description, the amount, and the auth user id and pass it to create a ticket
