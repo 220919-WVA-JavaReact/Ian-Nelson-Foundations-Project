@@ -39,6 +39,7 @@ public class ManagerServlet extends HttpServlet {
 
             resp.getWriter().write(mapper.writeValueAsString(errorMessage));
             return;
+
         } else {
             Employee loggedInEmploy = (Employee) session.getAttribute("auth-user");
             //resp.getWriter().write(mapper.writeValueAsString(loggedInEmploy));
@@ -55,5 +56,40 @@ public class ManagerServlet extends HttpServlet {
         }
 
     }
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        HttpSession session = req.getSession(false);
+
+        if (session == null) {
+            resp.setStatus(400);
+            resp.setContentType("application/json");
+
+            HashMap<String, Object> errorMessage = new HashMap<>();
+
+            errorMessage.put("Status code", 400);
+            errorMessage.put("Message", "No user found with provided credentials");
+            errorMessage.put("Timestamp", LocalDateTime.now().toString());
+
+            resp.getWriter().write(mapper.writeValueAsString(errorMessage));
+            return;
+
+        } else {
+            Employee loggedInEmploy = (Employee) session.getAttribute("auth-user");
+            if (loggedInEmploy.getUserRole().equals("Employee")) {
+                resp.setStatus(400);
+                resp.setContentType("application/json");
+
+                HashMap<String, Object> errorMessage = new HashMap<>();
+
+                errorMessage.put("Status code", 400);
+                errorMessage.put("Message", "Employees may not Approve or Deny tickets.");
+            }
+            if (req.getParameter("action").equals("Approve")) {
+                //we need to pass in a ticket id
+                //todo LOTS OF APPROVE WORK
+
+            }
+        }
+    }
 }

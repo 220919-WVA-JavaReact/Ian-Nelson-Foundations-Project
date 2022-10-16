@@ -14,7 +14,7 @@ public class TicketServiceAPI {
     TicketDAO td = new TicketDAOImplSQL();
 
 
-    //todo get loggedinuser information and pass it to an emlpoyee object?
+
     //can i check to see if a session is null in a single method before all methods in this class/servlet?
 
 
@@ -37,6 +37,10 @@ public class TicketServiceAPI {
         List<Ticket> tickets = td.getAllTicket(employee);
 
         return tickets;
+    }
+
+    public boolean approveTicket(){
+        boolean success = td.approveTicket(),
     }
 
 }

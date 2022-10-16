@@ -88,7 +88,7 @@ public class EmployeeDAOImplSQL implements EmployeeDAO{
                 String receivedPassword = rs.getString("password");
                 String receivedManager = rs.getString("user_role");
 
-                //todo refacotr employee to include userRole
+
                 employee = new Employee(receivedId, receivedUsername, receivedPassword);
             }
 
