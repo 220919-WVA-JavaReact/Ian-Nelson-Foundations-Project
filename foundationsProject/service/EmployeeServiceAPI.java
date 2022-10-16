@@ -20,21 +20,17 @@ public class EmployeeServiceAPI {
 
     }
 
-    public String login(String username, String password) {
+    public Employee login(String username, String password) {
         Employee employ = new Employee();
         employ = ed.getByUsername(username);
-        if (employ.getUserID() == 0) {
-            return "username";
+        if (employ.getPassword().equals(password)) {
+            System.out.println("You have been logged in!");
+            return employ;
         } else {
-            if (employ.getPassword().equals(password)) {
-                System.out.println("You have been logged in!");
-                return employ.toString();
-            } else {
-                System.out.println("Password does not match");
-                return "password";
-            }
-
+            System.out.println("Password does not match");
+            return null;
         }
-    }
 
+    }
 }
+

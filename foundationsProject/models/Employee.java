@@ -81,7 +81,7 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee{" +
+        return "{" +
                 "userID=" + userID +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
@@ -90,10 +90,10 @@ public class Employee {
     }
 
     public String toJsonString() {
-        return "{\"id\":" + userID + ", " +
+        return "{\"userID\":" + userID + ", " +
                 "\"username\":\"" + username + "\", " +
                 "\"password\":\"" + password + "\", " +
-                "\"userRole=\":\"" + userRole + "\"" +
+                "\"userRole\":\"" + userRole + "\"" +
                 "}";
     }
 }

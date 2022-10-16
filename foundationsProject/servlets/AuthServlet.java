@@ -54,22 +54,19 @@ public class AuthServlet extends HttpServlet {
             HttpSession session;
             Employee employee = mapper.readValue(req.getInputStream(), Employee.class);
 
-            String payload = esa.login(employee.getUsername(), employee.getPassword());
+            Employee payload = esa.login(employee.getUsername(), employee.getPassword());
 
-            if (payload.equals("username")) {
+            if (payload == null) {
                 resp.setStatus(400);
-                resp.getWriter().write("Username not found.");
-            } else if (payload.equals("password")) {
-                resp.setStatus(400);
-                resp.getWriter().write("Password does not match.");
+                resp.getWriter().write("Incorrect Credentials");
             } else {
                //Employee employ = mapper.readValue(payload, Employee.class);
                 //resp.getWriter().write(employ.toJsonString());
                 //todo session work
                 session = req.getSession();
-                session.setAttribute("auth-user", mapper.writeValueAsString(payload));
+                session.setAttribute("auth-user", payload);
                 resp.setStatus(200);
-                resp.getWriter().write(payload);
+                resp.getWriter().write(mapper.writeValueAsString(payload));
             }
 
 
@@ -78,4 +75,13 @@ public class AuthServlet extends HttpServlet {
 
     }
 
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession(false);
+        if (session != null) {
+            session.invalidate();
+            resp.getWriter().write("session ended");
+        }
+
+    }
 }
