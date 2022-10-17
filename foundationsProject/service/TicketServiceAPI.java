@@ -21,8 +21,8 @@ public class TicketServiceAPI {
     public boolean createTicketAPI(String description, String amount, Employee employee) {
         Ticket ticket = null;
 
-        ticket = new Ticket(description, Float.parseFloat(amount), employee.getUserID());
-        if (!description.equals("") && !amount.equals("")) {
+
+        if (!description.equals("") && !amount.equals("0.0")) {
             ticket = new Ticket(description, Float.parseFloat(amount), employee.getUserID());
             boolean successful = td.createTicket(ticket, employee);
             return successful;

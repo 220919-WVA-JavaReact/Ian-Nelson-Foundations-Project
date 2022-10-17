@@ -85,6 +85,7 @@ public class EmployeeServlet extends HttpServlet {
 
             String description = ticket.getDescription();
             String amount = String.valueOf(ticket.getAmount());
+            resp.getWriter().write(mapper.writeValueAsString(amount));
             boolean success = tsa.createTicketAPI(description, amount, loggedInEmploy);
 
             if (success) {
