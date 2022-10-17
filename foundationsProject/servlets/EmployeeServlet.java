@@ -84,7 +84,7 @@ public class EmployeeServlet extends HttpServlet {
             resp.setStatus(200);
 
             String description = ticket.getDescription();
-            float amount = (float)ticket.getAmount();
+            String amount = String.valueOf(ticket.getAmount());
             boolean success = tsa.createTicketAPI(description, amount, loggedInEmploy);
 
             if (success) {
@@ -92,7 +92,7 @@ public class EmployeeServlet extends HttpServlet {
                 resp.getWriter().write("Successfully submitted ticket.");
             } else {
                 resp.setStatus(400);
-                resp.getWriter().write("Something went wrong, servlet");
+                resp.getWriter().write("Description and Amount must not be left blank.");
             }
 
 
