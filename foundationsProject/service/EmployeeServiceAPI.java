@@ -32,5 +32,12 @@ public class EmployeeServiceAPI {
         }
 
     }
+
+    public boolean updateEmployeeRole(Employee employee, String role){
+        //todo k
+
+        return false;
+    }
+
 }
 
