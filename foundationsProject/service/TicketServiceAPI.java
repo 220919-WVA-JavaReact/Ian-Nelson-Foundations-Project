@@ -42,10 +42,15 @@ public class TicketServiceAPI {
         return tickets;
     }
 
-    public boolean approveTicket(){
-        //boolean success = td.approveTicket();
+    public boolean updateTicket(int ticketId, String status){
+        //we need to pass in a ticket object and String status
+        Ticket ticket = new Ticket(ticketId);
+        boolean updateStatus = td.approveTicket(ticket, status);
 
-        return true;
+        if (updateStatus) {
+            return true;
+        }
+        return false;
     }
 
 }

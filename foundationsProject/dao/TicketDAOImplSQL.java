@@ -139,7 +139,8 @@ public class TicketDAOImplSQL implements TicketDAO {
     @Override
     public boolean approveTicket(Ticket ticket, String answer) {
 
-        //todo cant get approveticket to approve the ticket...
+
+
         try (Connection conn = ConnectionUtil.getConnection()) {
             String sql = "UPDATE ticket SET status = ? WHERE ticket_id = ? AND status = ?";
             PreparedStatement ps = conn.prepareStatement(sql);

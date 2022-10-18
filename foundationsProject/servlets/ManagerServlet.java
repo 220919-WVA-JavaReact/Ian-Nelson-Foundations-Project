@@ -76,6 +76,7 @@ public class ManagerServlet extends HttpServlet {
 
         } else {
             Employee loggedInEmploy = (Employee) session.getAttribute("auth-user");
+            Ticket ticket = mapper.readValue(req.getInputStream(), Ticket.class);
             if (loggedInEmploy.getUserRole().equals("Employee")) {
                 resp.setStatus(400);
                 resp.setContentType("application/json");
@@ -88,6 +89,24 @@ public class ManagerServlet extends HttpServlet {
             if (req.getParameter("action").equals("Approve")) {
                 //we need to pass in a ticket id
                 //todo LOTS OF APPROVE WORK
+                boolean ticketApproved = tsa.updateTicket(ticket.getTicketId(), "Approved");
+                if (ticketApproved) {
+                    resp.setStatus(200);
+                    resp.getWriter().write("Successfully approved ticket.");
+                } else {
+                    resp.setStatus(400);
+                    resp.getWriter().write("Can not update completed tickets.");
+                }
+
+            } else if (req.getParameter("action").equals("Deny")) {
+                boolean ticketDenied = tsa.updateTicket(ticket.getTicketId(), "Denied");
+                if (ticketDenied) {
+                    resp.setStatus(200);
+                    resp.getWriter().write("Successfully denied ticket.");
+                } else {
+                    resp.setStatus(400);
+                    resp.getWriter().write("Can not update completed tickets.");
+                }
 
             }
         }
