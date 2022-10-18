@@ -77,15 +77,12 @@ public class ManagerServlet extends HttpServlet {
         } else {
             Employee loggedInEmploy = (Employee) session.getAttribute("auth-user");
             Ticket ticket = mapper.readValue(req.getInputStream(), Ticket.class);
+            resp.getWriter().write(mapper.writeValueAsString(loggedInEmploy));
             if (loggedInEmploy.getUserRole().equals("Employee")) {
                 resp.setStatus(400);
-                resp.setContentType("application/json");
-
-                HashMap<String, Object> errorMessage = new HashMap<>();
-
-                errorMessage.put("Status code", 400);
-                errorMessage.put("Message", "Employees may not Approve or Deny tickets.");
-            }
+                resp.getWriter().write("Employees may not Approve or Deny Tickets.");
+                return;
+            } else {
             if (req.getParameter("action").equals("Approve")) {
                 //we need to pass in a ticket id
                 //todo LOTS OF APPROVE WORK
@@ -107,7 +104,7 @@ public class ManagerServlet extends HttpServlet {
                     resp.setStatus(400);
                     resp.getWriter().write("Can not update completed tickets.");
                 }
-
+            }
             }
         }
     }
