@@ -133,7 +133,29 @@ public class EmployeeDAOImplSQL implements EmployeeDAO{
             }
 
         } catch (SQLException e) {
-            System.out.println("Something went wrong in ticketDAOSQL!");
+            System.out.println("Something went wrong in employeeDAOSQL!");
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean changePass(int userID, String newPass1) {
+        try (Connection conn = ConnectionUtil.getConnection()) {
+            String sql = "UPDATE users SET password = ? WHERE user_id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, newPass1);
+            ps.setInt(2, userID);
+
+            int result = ps.executeUpdate();
+
+            if (result == 1) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Something went wrong in employeeDAOSQL!");
             e.printStackTrace();
         }
 

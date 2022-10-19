@@ -100,4 +100,57 @@ public class EmployeeServlet extends HttpServlet {
             //resp.getWriter().write(mapper.writeValueAsString(ticket));
         }
     }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //Here we want to be able to submit tickets with our logged-in user session
+        resp.setContentType("application/json");
+        HttpSession session = req.getSession(false);
+
+        if (session == null) {
+            resp.setStatus(400);
+            resp.setContentType("application/json");
+
+            HashMap<String, Object> errorMessage = new HashMap<>();
+
+            errorMessage.put("Status code", 400);
+            errorMessage.put("Message", "No user found with provided credentials");
+            errorMessage.put("Timestamp", LocalDateTime.now().toString());
+
+            resp.getWriter().write(mapper.writeValueAsString(errorMessage));
+            return;
+        } else {
+            Employee loggedInEmploy = (Employee) session.getAttribute("auth-user");
+            resp.getWriter().write(mapper.writeValueAsString(loggedInEmploy));
+
+            HashMap<String, Object> postInput = mapper.readValue(req.getInputStream(), HashMap.class);
+
+            //we are casting the ^ Object as/to a String
+            //we could also theoretically just do String, String for this code, but object is typically better
+            String passwordCheck = (String) postInput.get("current-password");
+            String newPass1 = (String) postInput.get("new-password");
+            String newPass2 = (String) postInput.get("new-password2");
+            if (passwordCheck.equals(loggedInEmploy.getPassword())) {
+                if (newPass1.equals(newPass2)) {
+                    boolean passwordUpdate = esa.changeEmployeePassword(loggedInEmploy.getUserID(), newPass1);
+                    if (passwordUpdate) {
+                        resp.setStatus(200);
+                        resp.getWriter().write("Password updated!");
+                    } else {
+                        resp.setStatus(400);
+                        resp.getWriter().write("Something went wrong");
+                    }
+                } else {
+                    resp.setStatus(400);
+                    resp.getWriter().write("New passwords don't match.");
+                }
+            } else {
+                resp.setStatus(400);
+                resp.getWriter().write("Provided password does not match your current password.");
+            }
+            // lets try to make a hash map from the json input, currentpw, newpassword, newpassword2
+
+
+        }
+    }
 }

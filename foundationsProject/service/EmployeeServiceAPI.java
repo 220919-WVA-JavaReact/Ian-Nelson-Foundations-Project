@@ -53,5 +53,14 @@ public class EmployeeServiceAPI {
 
     }
 
+
+    public boolean changeEmployeePassword(int userID, String newPass1) {
+        boolean updatedPassword = ed.changePass(userID, newPass1);
+        if (updatedPassword) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 

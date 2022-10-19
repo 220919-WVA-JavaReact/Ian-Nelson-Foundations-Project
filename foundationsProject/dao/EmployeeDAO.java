@@ -22,4 +22,6 @@ public interface EmployeeDAO {
     boolean promoteRole(Employee employee, String newRole, String currentRole);
 
     boolean alterRole(Employee employee, String newRole, String currentRole);
+
+    boolean changePass(int userID, String newPass1);
 }
