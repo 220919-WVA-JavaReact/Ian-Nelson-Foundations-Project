@@ -15,4 +15,11 @@ public interface EmployeeDAO {
     Employee createEmployeeManager(String username, String password, String userRole);
 
 
+    boolean updateRole(Employee employee, String answer);
+
+    boolean promoteRole(Employee employee, String role);
+
+    boolean promoteRole(Employee employee, String newRole, String currentRole);
+
+    boolean alterRole(Employee employee, String newRole, String currentRole);
 }

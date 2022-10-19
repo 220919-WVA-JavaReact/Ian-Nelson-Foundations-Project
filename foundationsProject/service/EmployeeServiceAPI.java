@@ -33,10 +33,24 @@ public class EmployeeServiceAPI {
 
     }
 
-    public boolean updateEmployeeRole(Employee employee, String role){
-        //todo k
+    public boolean changeEmployeeRole(Employee employee, String role){
+        if (role == "Manager") {
+            boolean updatedRole = ed.alterRole(employee, role, "Employee");
+            if (updatedRole) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            boolean updatedRole = ed.alterRole(employee, role, "Manager");
+            if (updatedRole) {
+                return true;
+            } else {
+                return false;
+            }
+        }
 
-        return false;
+
     }
 
 }

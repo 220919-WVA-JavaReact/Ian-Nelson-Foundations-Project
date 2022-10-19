@@ -20,7 +20,7 @@ import java.util.HashMap;
 @WebServlet("/role")
 public class RoleServlet extends HttpServlet {
 
-}
+
     EmployeeServiceAPI esa = new EmployeeServiceAPI();
     ObjectMapper mapper = new ObjectMapper();
 
@@ -50,10 +50,23 @@ public class RoleServlet extends HttpServlet {
                 Employee updateEmployee = mapper.readValue(req.getInputStream(), Employee.class);
                 //todo pass in the employee's userID we want to update in postman
                 if (req.getParameter("action").equals("Promote")) {
-                    //WE NEED TO PASS IN THE USER ID, from employee instance
-                    //We are passing in manager to update from employee to manager
-                    //at some point we will need to make sure they are not already a manager
-                //boolean updateSuccess = esa.updateRole(updateEmployee, "Manager");
+                    boolean updateSuccess = esa.changeEmployeeRole(updateEmployee, "Manager");
+                    if (updateSuccess) {
+                        resp.setStatus(200);
+                        resp.getWriter().write("Employee promoted to Manager.");
+                    } else {
+                        resp.setStatus(400);
+                        resp.getWriter().write("This user is already a Manager.");
+                    }
+                } else if (req.getParameter("action").equals("Demote")) {
+                    boolean demoteSuccess = esa.changeEmployeeRole(updateEmployee, "Employee");
+                    if (demoteSuccess) {
+                        resp.setStatus(200);
+                        resp.getWriter().write("Manager demoted to Employee");
+                    } else {
+                        resp.setStatus(400);
+                        resp.getWriter().write("This user is not a Manager.");
+                    }
                 }
             }
         }

@@ -99,7 +99,46 @@ public class EmployeeDAOImplSQL implements EmployeeDAO{
         return employee;
     }
 
+    @Override
+    public boolean updateRole(Employee employee, String answer) {
+        return false;
+    }
 
+    @Override
+    public boolean promoteRole(Employee employee, String role) {
+        return false;
+    }
+
+    @Override
+    public boolean promoteRole(Employee employee, String newRole, String currentRole) {
+        return false;
+    }
+
+    @Override
+    public boolean alterRole(Employee employee, String newRole, String currentRole) {
+
+
+
+        try (Connection conn = ConnectionUtil.getConnection()) {
+            String sql = "UPDATE users SET user_role = ? WHERE user_id = ? AND user_role = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, newRole);
+            ps.setInt(2, employee.getUserID());
+            ps.setString(3, currentRole);
+
+            int result = ps.executeUpdate();
+
+            if (result == 1) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Something went wrong in ticketDAOSQL!");
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 
 
 }
