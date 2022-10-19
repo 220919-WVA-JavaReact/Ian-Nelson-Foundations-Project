@@ -62,5 +62,10 @@ public class EmployeeServiceAPI {
             return false;
         }
     }
+
+    public Employee getEmployee(String username) {
+        Employee newEmployee = ed.getByUsername(username);
+        return newEmployee;
+    }
 }
 

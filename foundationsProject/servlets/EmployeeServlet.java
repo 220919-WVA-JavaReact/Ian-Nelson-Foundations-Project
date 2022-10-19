@@ -136,6 +136,12 @@ public class EmployeeServlet extends HttpServlet {
                     if (passwordUpdate) {
                         resp.setStatus(200);
                         resp.getWriter().write("Password updated!");
+                        //if code breaks this is why
+                        Employee newEmployeeSession = esa.getEmployee(loggedInEmploy.getUsername());
+                        HttpSession newSession = req.getSession();
+                        newSession.setAttribute("auth-user", newEmployeeSession);
+                        resp.getWriter().write(mapper.writeValueAsString(newEmployeeSession));
+
                     } else {
                         resp.setStatus(400);
                         resp.getWriter().write("Something went wrong");
