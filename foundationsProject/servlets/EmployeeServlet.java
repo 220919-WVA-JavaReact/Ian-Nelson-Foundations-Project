@@ -30,13 +30,13 @@ public class EmployeeServlet extends HttpServlet {
         HttpSession session = req.getSession(false);
 
         if (session == null) {
-            resp.setStatus(400);
+            resp.setStatus(401);
             resp.setContentType("application/json");
 
             HashMap<String, Object> errorMessage = new HashMap<>();
 
-            errorMessage.put("Status code", 400);
-            errorMessage.put("Message", "No user found with provided credentials");
+            errorMessage.put("Status code", 401);
+            errorMessage.put("Message", "You must be logged in to view this content.");
             errorMessage.put("Timestamp", LocalDateTime.now().toString());
 
             resp.getWriter().write(mapper.writeValueAsString(errorMessage));
@@ -60,16 +60,6 @@ public class EmployeeServlet extends HttpServlet {
                 resp.setStatus(200);
                 resp.getWriter().write(mapper.writeValueAsString(tickets));
 
-
-//            resp.getWriter().write(mapper.writeValueAsString(loggedInEmploy));
-//
-
-//
-//            List<Ticket> tickets = tsa.viewAllTickets(loggedInEmploy);
-//
-//            if (tickets != null) {
-//                resp.setStatus(200);
-//                resp.getWriter().write(mapper.writeValueAsString(tickets));
             }
         }
     }
@@ -81,13 +71,13 @@ public class EmployeeServlet extends HttpServlet {
         HttpSession session = req.getSession(false);
 
         if (session == null) {
-            resp.setStatus(400);
+            resp.setStatus(401);
             resp.setContentType("application/json");
 
             HashMap<String, Object> errorMessage = new HashMap<>();
 
-            errorMessage.put("Status code", 400);
-            errorMessage.put("Message", "No user found with provided credentials");
+            errorMessage.put("Status code", 401);
+            errorMessage.put("Message", "You must be logged in to view this content");
             errorMessage.put("Timestamp", LocalDateTime.now().toString());
 
             resp.getWriter().write(mapper.writeValueAsString(errorMessage));
@@ -105,7 +95,7 @@ public class EmployeeServlet extends HttpServlet {
             boolean success = tsa.createTicketAPI(description, amount, loggedInEmploy);
 
             if (success) {
-                resp.setStatus(200);
+                resp.setStatus(201);
                 resp.getWriter().write("Successfully submitted ticket.");
             } else {
                 resp.setStatus(400);
@@ -121,13 +111,13 @@ public class EmployeeServlet extends HttpServlet {
         HttpSession session = req.getSession(false);
 
         if (session == null) {
-            resp.setStatus(400);
+            resp.setStatus(401);
             resp.setContentType("application/json");
 
             HashMap<String, Object> errorMessage = new HashMap<>();
 
-            errorMessage.put("Status code", 400);
-            errorMessage.put("Message", "No user found with provided credentials");
+            errorMessage.put("Status code", 401);
+            errorMessage.put("Message", "You must be logged in to access this page.");
             errorMessage.put("Timestamp", LocalDateTime.now().toString());
 
             resp.getWriter().write(mapper.writeValueAsString(errorMessage));
@@ -155,8 +145,8 @@ public class EmployeeServlet extends HttpServlet {
                         resp.getWriter().write(mapper.writeValueAsString(newEmployeeSession));
 
                     } else {
-                        resp.setStatus(400);
-                        resp.getWriter().write("Something went wrong");
+                        resp.setStatus(202);
+                        resp.getWriter().write("Your new password can not be the same as your old password.");
                     }
                 } else {
                     resp.setStatus(400);

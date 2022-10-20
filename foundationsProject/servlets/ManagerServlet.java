@@ -81,7 +81,7 @@ public class ManagerServlet extends HttpServlet {
             if (req.getParameter("action").equals("Approve")) {
                 boolean ticketApproved = tsa.updateTicket(ticket.getTicketId(), "Approved");
                 if (ticketApproved) {
-                    resp.setStatus(200);
+                    resp.setStatus(201);
                     resp.getWriter().write("Successfully approved ticket.");
                 } else {
                     resp.setStatus(400);
@@ -91,7 +91,7 @@ public class ManagerServlet extends HttpServlet {
             } else if (req.getParameter("action").equals("Deny")) {
                 boolean ticketDenied = tsa.updateTicket(ticket.getTicketId(), "Denied");
                 if (ticketDenied) {
-                    resp.setStatus(200);
+                    resp.setStatus(201);
                     resp.getWriter().write("Successfully denied ticket.");
                 } else {
                     resp.setStatus(400);

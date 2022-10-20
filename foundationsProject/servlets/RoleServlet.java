@@ -52,7 +52,8 @@ public class RoleServlet extends HttpServlet {
                         resp.setStatus(200);
                         resp.getWriter().write("Employee promoted to Manager.");
                     } else {
-                        resp.setStatus(400);
+                        //202 accepted but not acted upon
+                        resp.setStatus(202);
                         resp.getWriter().write("This user is already a Manager.");
                     }
                 } else if (req.getParameter("action").equals("Demote")) {
@@ -61,7 +62,7 @@ public class RoleServlet extends HttpServlet {
                         resp.setStatus(200);
                         resp.getWriter().write("Manager demoted to Employee");
                     } else {
-                        resp.setStatus(400);
+                        resp.setStatus(202);
                         resp.getWriter().write("This user is not a Manager.");
                     }
                 }

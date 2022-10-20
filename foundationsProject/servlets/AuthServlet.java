@@ -39,7 +39,8 @@ public class AuthServlet extends HttpServlet {
                 resp.setStatus(400);
                 resp.getWriter().write("Username taken");
             } else {
-                resp.setStatus(200);
+                //201 created, created acct in db
+                resp.setStatus(201);
                 resp.getWriter().write("Successfully registered: ");
                 resp.getWriter().write(payload);
             }
@@ -67,6 +68,7 @@ public class AuthServlet extends HttpServlet {
 
         if (session != null) {
             session.invalidate();
+            resp.setStatus(200);
             resp.getWriter().write("session ended");
         }
     }
