@@ -40,7 +40,7 @@ public class AuthServlet extends HttpServlet {
                 resp.getWriter().write("Username taken");
             } else {
                 //201 created, created acct in db
-                resp.setStatus(201);
+                resp.setStatus(200);
                 resp.getWriter().write("Successfully registered: ");
                 resp.getWriter().write(payload);
             }

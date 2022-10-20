@@ -74,7 +74,8 @@ public class ManagerServlet extends HttpServlet {
             Ticket ticket = mapper.readValue(req.getInputStream(), Ticket.class);
             resp.getWriter().write(mapper.writeValueAsString(loggedInEmploy));
             if (loggedInEmploy.getUserRole().equals("Employee")) {
-                resp.setStatus(400);
+                //unauthorized
+                resp.setStatus(401);
                 resp.getWriter().write("Employees may not Approve or Deny Tickets.");
                 return;
             } else {
