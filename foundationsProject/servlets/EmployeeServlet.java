@@ -84,13 +84,11 @@ public class EmployeeServlet extends HttpServlet {
             return;
         } else {
             Employee loggedInEmploy = (Employee) session.getAttribute("auth-user");
-            resp.getWriter().write(mapper.writeValueAsString(loggedInEmploy));
 
             Ticket ticket = mapper.readValue(req.getInputStream(), Ticket.class);
             //resp.setStatus(200);
             String description = ticket.getDescription();
             String amount = String.valueOf(ticket.getAmount());
-            resp.getWriter().write(mapper.writeValueAsString(amount));
 
             boolean success = tsa.createTicketAPI(description, amount, loggedInEmploy);
 
@@ -133,24 +131,29 @@ public class EmployeeServlet extends HttpServlet {
             String newPass2 = (String) postInput.get("new-password2");
 
             if (passwordCheck.equals(loggedInEmploy.getPassword())) {
-                if (newPass1.equals(newPass2)) {
-                    boolean passwordUpdate = esa.changeEmployeePassword(loggedInEmploy.getUserID(), newPass1);
-                    if (passwordUpdate) {
-                        resp.setStatus(200);
-                        resp.getWriter().write("Password updated!");
+                if (!passwordCheck.equals(newPass1)) {
+                    if (newPass1.equals(newPass2)) {
+                        boolean passwordUpdate = esa.changeEmployeePassword(loggedInEmploy.getUserID(), newPass1);
+                        if (passwordUpdate) {
+                            resp.setStatus(200);
+                            resp.getWriter().write("Password updated!");
 
-                        Employee newEmployeeSession = esa.getEmployee(loggedInEmploy.getUsername());
-                        HttpSession newSession = req.getSession();
-                        newSession.setAttribute("auth-user", newEmployeeSession);
-                        resp.getWriter().write(mapper.writeValueAsString(newEmployeeSession));
+                            Employee newEmployeeSession = esa.getEmployee(loggedInEmploy.getUsername());
+                            HttpSession newSession = req.getSession();
+                            newSession.setAttribute("auth-user", newEmployeeSession);
+                            resp.getWriter().write(mapper.writeValueAsString(newEmployeeSession));
 
+                        } else {
+                            resp.setStatus(202);
+                            resp.getWriter().write("Your new password can not be the same as your old password.");
+                        }
                     } else {
-                        resp.setStatus(202);
-                        resp.getWriter().write("Your new password can not be the same as your old password.");
+                        resp.setStatus(400);
+                        resp.getWriter().write("New passwords don't match.");
                     }
                 } else {
                     resp.setStatus(400);
-                    resp.getWriter().write("New passwords don't match.");
+                    resp.getWriter().write("New password can not match the old password.");
                 }
             } else {
                 resp.setStatus(400);
