@@ -53,4 +53,9 @@ public class TicketServiceAPI {
         return false;
     }
 
+    public List<Ticket> viewTickets(Employee loggedInEmploy, String getStatus) {
+        List<Ticket> tickets = td.getAllTicket(loggedInEmploy, getStatus);
+
+        return tickets;
+    }
 }

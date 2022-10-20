@@ -30,4 +30,6 @@ public interface TicketDAO {
     List<Ticket> getAllTicket(Employee employee);
 
     Ticket getByTicketID(int ticketID);
+
+    ArrayList<Ticket> getAllTicket(Employee employee, String getStatus);
 }

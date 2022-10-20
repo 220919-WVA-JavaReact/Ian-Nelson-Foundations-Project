@@ -43,6 +43,7 @@ public class TicketDAOImplSQL implements TicketDAO {
         return null;
     }
 
+
     @Override
     public ArrayList<Ticket> getAllPendingTicket() {
         //get all pending tickets
@@ -166,5 +167,33 @@ public class TicketDAOImplSQL implements TicketDAO {
     @Override
     public void denyTicket(Ticket ticket) {
 
+    }
+
+    @Override
+    public ArrayList<Ticket> getAllTicket(Employee employee, String getStatus) {
+        List<Ticket> ticketList = new ArrayList<>();
+
+        try (Connection conn = ConnectionUtil.getConnection()) {
+            String sql = "SELECT * FROM ticket WHERE user_id = ? AND status = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, employee.getUserID());
+            ps.setString(2, getStatus);
+            ResultSet rs;
+            if ((rs = ps.executeQuery()) != null) {
+                while (rs.next()) {
+                    int ticketID = rs.getInt("ticket_id");
+                    String description = rs.getString("description");
+                    float amount = rs.getFloat("amount");
+                    String status = rs.getString("status");
+                    int userID = rs.getInt("user_id");
+                    ticketList.add(new Ticket(ticketID, description, status, amount, userID));
+                }
+            }
+        } catch (Exception e) {
+            //add sout and make desc & amount NOT NULL
+            e.printStackTrace();
+        }
+
+        return (ArrayList<Ticket>) ticketList;
     }
 }

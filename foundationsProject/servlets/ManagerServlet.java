@@ -25,6 +25,7 @@ public class ManagerServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //VIEW PENDING TICKETS
         HttpSession session = req.getSession(false);
 
         if (session == null) {
@@ -42,25 +43,19 @@ public class ManagerServlet extends HttpServlet {
 
         } else {
             Employee loggedInEmploy = (Employee) session.getAttribute("auth-user");
-            //resp.getWriter().write(mapper.writeValueAsString(loggedInEmploy));
-            TicketServiceAPI tsa = new TicketServiceAPI();
-
-
             List<Ticket> tickets = tsa.viewPendingTickets();
 
             if (tickets != null) {
                 resp.setStatus(200);
                 resp.getWriter().write(mapper.writeValueAsString(tickets));
             }
-
         }
-
     }
+
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         HttpSession session = req.getSession(false);
-
+        //APPROVE/DENY TICKETS
         if (session == null) {
             resp.setStatus(400);
             resp.setContentType("application/json");
@@ -84,8 +79,6 @@ public class ManagerServlet extends HttpServlet {
                 return;
             } else {
             if (req.getParameter("action").equals("Approve")) {
-                //we need to pass in a ticket id
-                //todo LOTS OF APPROVE WORK
                 boolean ticketApproved = tsa.updateTicket(ticket.getTicketId(), "Approved");
                 if (ticketApproved) {
                     resp.setStatus(200);

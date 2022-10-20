@@ -97,7 +97,6 @@ public class TicketService {
                 } else {
                     System.out.println("You can only Approve tickets that are Pending");
                 }
-                //UPDATE tickets SET status = Approved WHERE tick_id = ?
                 break;
             case "2":
                 String answer2 = "Denied";

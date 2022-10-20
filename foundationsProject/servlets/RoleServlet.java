@@ -19,14 +19,12 @@ import java.util.HashMap;
 
 @WebServlet("/role")
 public class RoleServlet extends HttpServlet {
-
-
     EmployeeServiceAPI esa = new EmployeeServiceAPI();
     ObjectMapper mapper = new ObjectMapper();
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        //PROMOTE&DEMOTE
         HttpSession session = req.getSession(false);
 
         if (session == null) {
@@ -48,7 +46,6 @@ public class RoleServlet extends HttpServlet {
                 resp.getWriter().write("Employees may not change others roles.");
         } else {
                 Employee updateEmployee = mapper.readValue(req.getInputStream(), Employee.class);
-                //todo pass in the employee's userID we want to update in postman
                 if (req.getParameter("action").equals("Promote")) {
                     boolean updateSuccess = esa.changeEmployeeRole(updateEmployee, "Manager");
                     if (updateSuccess) {
