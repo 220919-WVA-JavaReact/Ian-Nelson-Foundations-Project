@@ -27,6 +27,7 @@ public class EmployeeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
        // GET ALL SESSION USER'S TICKETS
+        resp.setContentType("application/json");
         HttpSession session = req.getSession(false);
 
         if (session == null) {

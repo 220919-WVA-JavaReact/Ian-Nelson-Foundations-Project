@@ -70,6 +70,7 @@ public class ManagerServlet extends HttpServlet {
             return;
 
         } else {
+            resp.setContentType("application/json");
             Employee loggedInEmploy = (Employee) session.getAttribute("auth-user");
             Ticket ticket = mapper.readValue(req.getInputStream(), Ticket.class);
             resp.getWriter().write(mapper.writeValueAsString(loggedInEmploy));

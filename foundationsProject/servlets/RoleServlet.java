@@ -25,6 +25,7 @@ public class RoleServlet extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //PROMOTE&DEMOTE
+        resp.setContentType("application/json");
         HttpSession session = req.getSession(false);
 
         if (session == null) {
