@@ -23,7 +23,7 @@ public class EmployeeServiceAPI {
     public Employee login(String username, String password) {
         Employee employ = new Employee();
         employ = ed.getByUsername(username);
-        if (employ.getPassword().equals(password)) {
+        if (password.equals(employ.getPassword())) {
             System.out.println("You have been logged in!");
             return employ;
         } else {

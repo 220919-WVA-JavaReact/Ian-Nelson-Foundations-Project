@@ -29,13 +29,13 @@ public class ManagerServlet extends HttpServlet {
         HttpSession session = req.getSession(false);
 
         if (session == null) {
-            resp.setStatus(400);
+            resp.setStatus(401);
             resp.setContentType("application/json");
 
             HashMap<String, Object> errorMessage = new HashMap<>();
 
-            errorMessage.put("Status code", 400);
-            errorMessage.put("Message", "No user found with provided credentials");
+            errorMessage.put("Status code", 401);
+            errorMessage.put("Message", "You must be logged in to view this page.");
             errorMessage.put("Timestamp", LocalDateTime.now().toString());
 
             resp.getWriter().write(mapper.writeValueAsString(errorMessage));
@@ -57,13 +57,13 @@ public class ManagerServlet extends HttpServlet {
         HttpSession session = req.getSession(false);
         //APPROVE/DENY TICKETS
         if (session == null) {
-            resp.setStatus(400);
+            resp.setStatus(401);
             resp.setContentType("application/json");
 
             HashMap<String, Object> errorMessage = new HashMap<>();
 
             errorMessage.put("Status code", 400);
-            errorMessage.put("Message", "No user found with provided credentials");
+            errorMessage.put("Message", "You must be logged in to view this page.");
             errorMessage.put("Timestamp", LocalDateTime.now().toString());
 
             resp.getWriter().write(mapper.writeValueAsString(errorMessage));
