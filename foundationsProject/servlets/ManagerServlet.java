@@ -73,7 +73,6 @@ public class ManagerServlet extends HttpServlet {
             resp.setContentType("application/json");
             Employee loggedInEmploy = (Employee) session.getAttribute("auth-user");
             Ticket ticket = mapper.readValue(req.getInputStream(), Ticket.class);
-            resp.getWriter().write(mapper.writeValueAsString(loggedInEmploy));
             if (loggedInEmploy.getUserRole().equals("Employee")) {
                 //unauthorized
                 resp.setStatus(401);

@@ -57,7 +57,7 @@ public class AuthServlet extends HttpServlet {
                 session = req.getSession();
                 session.setAttribute("auth-user", payload);
                 resp.setStatus(200);
-                resp.getWriter().write(mapper.writeValueAsString(payload));
+                resp.getWriter().write("Log in successful!");
             }
         }
     }
